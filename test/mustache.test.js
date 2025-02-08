@@ -22,3 +22,13 @@ test('Tags', () => {
 
   expect(data).toBe('Hello Chuluq, my hobby is <b>Programming</b>');
 });
+
+test('Nested Object', () => {
+  const data = Mustache.render('Hello {{person.name}}', {
+    person: {
+      name: 'Chuluq'
+    }
+  });
+
+  expect(data).toBe('Hello Chuluq');
+});
