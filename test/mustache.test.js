@@ -13,3 +13,12 @@ test('Menggunakan Mustache Cache', () => {
 
   expect(data).toBe('Hello Chuluq');
 });
+
+test('Tags', () => {
+  const data = Mustache.render('Hello {{name}}, my hobby is {{{hobby}}}', {
+    name: 'Chuluq',
+    hobby: '<b>Programming</b>',
+  });
+
+  expect(data).toBe('Hello Chuluq, my hobby is <b>Programming</b>');
+});
