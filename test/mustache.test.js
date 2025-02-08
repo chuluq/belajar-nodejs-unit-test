@@ -1,4 +1,5 @@
 import Mustache from 'mustache';
+import fs from 'fs/promises'
 
 test('Menggunakan Mustache', () => {
   const data = Mustache.render('Hello {{name}}', {name: 'Chuluq'});
@@ -32,3 +33,13 @@ test('Nested Object', () => {
 
   expect(data).toBe('Hello Chuluq');
 });
+
+test("Mustache File", async () => {
+  const helloTemplate = await  fs.readFile('./templates/hello.mustache').then(data => data.toString());
+
+  const data = Mustache.render(helloTemplate, {
+    title: 'Chuluq',
+  });
+
+  expect(data).toContain('Chuluq');
+})
