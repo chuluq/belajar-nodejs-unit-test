@@ -133,3 +133,15 @@ test('Functions', async () => {
 
   expect(data).toBe('Hello CHULUQ');
 });
+
+test('Comment', async () => {
+  const helloTemplate = await fs.readFile('./templates/comment.mustache').
+      then(data => data.toString());
+
+  const data = Mustache.render(helloTemplate, {
+    title: 'Chuluq',
+  });
+
+  expect(data).toContain('Chuluq');
+  expect(data).not.toContain('Ini Komentar');
+});
