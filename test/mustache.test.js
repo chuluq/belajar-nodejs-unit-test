@@ -101,3 +101,20 @@ test('List', async () => {
   expect(data).toContain('Gaming');
   expect(data).toContain('Reading');
 });
+
+test('List Object', async () => {
+  const helloTemplate = await fs.readFile('./templates/students.mustache').
+      then(data => data.toString());
+
+  const data = Mustache.render(helloTemplate, {
+    students: [
+      {name: "Chuluq", value: 100},
+      {name: "Budi", value: 95},
+    ]
+  });
+
+  expect(data).toContain('Chuluq');
+  expect(data).toContain('Budi');
+  expect(data).toContain('100');
+  expect(data).toContain('95');
+});
