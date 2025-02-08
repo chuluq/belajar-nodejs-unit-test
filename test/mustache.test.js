@@ -1,5 +1,5 @@
 import Mustache from 'mustache';
-import fs from 'fs/promises'
+import fs from 'fs/promises';
 
 test('Menggunakan Mustache', () => {
   const data = Mustache.render('Hello {{name}}', {name: 'Chuluq'});
@@ -27,19 +27,42 @@ test('Tags', () => {
 test('Nested Object', () => {
   const data = Mustache.render('Hello {{person.name}}', {
     person: {
-      name: 'Chuluq'
-    }
+      name: 'Chuluq',
+    },
   });
 
   expect(data).toBe('Hello Chuluq');
 });
 
-test("Mustache File", async () => {
-  const helloTemplate = await  fs.readFile('./templates/hello.mustache').then(data => data.toString());
+test('Mustache File', async () => {
+  const helloTemplate = await fs.readFile('./templates/hello.mustache').
+      then(data => data.toString());
 
   const data = Mustache.render(helloTemplate, {
     title: 'Chuluq',
   });
 
   expect(data).toContain('Chuluq');
-})
+});
+
+test('Mustache Sections Not Show', async () => {
+  const helloTemplate = await fs.readFile('./templates/person.mustache').
+      then(data => data.toString());
+
+  const data = Mustache.render(helloTemplate, {});
+
+  expect(data).not.toContain('Hello Person');
+});
+
+test('Mustache Sections Show', async () => {
+  const helloTemplate = await fs.readFile('./templates/person.mustache').
+      then(data => data.toString());
+
+  const data = Mustache.render(helloTemplate, {
+    person: {
+      name: 'Chuluq',
+    },
+  });
+
+  expect(data).toContain('Hello Person');
+});
